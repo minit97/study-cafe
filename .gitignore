@@ -38,6 +38,7 @@ out/
 
 # 설정파일
 *.properties
+*.yml
 
 /gradle
 
