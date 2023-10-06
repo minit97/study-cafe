@@ -1,4 +1,4 @@
-package com.example.studyCafe.exception.security;
+package com.example.studyCafe.exception.securityException;
 
 public class NotFoundMemberException extends RuntimeException {
     public NotFoundMemberException() {

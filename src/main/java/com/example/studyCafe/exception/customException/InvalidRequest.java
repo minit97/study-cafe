@@ -1,4 +1,4 @@
-package com.example.studyCafe.exception.CustomException;
+package com.example.studyCafe.exception.customException;
 
 
 import com.example.studyCafe.exception.GlobalException;

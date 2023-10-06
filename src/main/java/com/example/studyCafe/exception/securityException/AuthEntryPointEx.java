@@ -1,4 +1,4 @@
-package com.example.studyCafe.exception;
+package com.example.studyCafe.exception.securityException;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

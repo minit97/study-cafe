@@ -1,4 +1,4 @@
-package com.example.studyCafe.exception.security;
+package com.example.studyCafe.exception.securityException;
 
 public class DuplicateMemberException extends RuntimeException {
     public DuplicateMemberException() {
