@@ -1,0 +1,39 @@
+= Auth API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+// :sectlinks:
+
+== 회원가입
+=== 요청
+include::{snippets}/signup/http-request.adoc[]
+include::{snippets}/signup/request-fields.adoc[]
+=== 응답
+include::{snippets}/signup/http-response.adoc[]
+include::{snippets}/signup/response-fields.adoc[]
+
+== 로그인
+=== 요청
+include::{snippets}/login/http-request.adoc[]
+include::{snippets}/login/request-fields.adoc[]
+=== 응답
+include::{snippets}/login/http-response.adoc[]
+include::{snippets}/login/response-fields.adoc[]
+
+== 본인 정보 조회
+=== 요청
+include::{snippets}/myInfo/http-request.adoc[]
+include::{snippets}/myInfo/request-headers.adoc[]
+=== 응답
+include::{snippets}/myInfo/http-response.adoc[]
+include::{snippets}/myInfo/response-fields.adoc[]
+
+== 회원 정보 조회(어드민용)
+=== 요청
+include::{snippets}/admin_userInfo/http-request.adoc[]
+include::{snippets}/admin_userInfo/request-headers.adoc[]
+=== 응답
+include::{snippets}/admin_userInfo/http-response.adoc[]
+include::{snippets}/admin_userInfo/response-fields.adoc[]

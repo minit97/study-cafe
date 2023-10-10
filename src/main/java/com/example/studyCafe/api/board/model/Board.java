@@ -1,27 +1,34 @@
 package com.example.studyCafe.api.board.model;
 
+import com.example.studyCafe.api.auth.model.User;
+import com.example.studyCafe.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import static jakarta.persistence.FetchType.*;
+import static lombok.AccessLevel.*;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Builder
-public class Board {
+public class Board extends BaseTimeEntity {
 
     @Id
-    @Column(name = "post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+    @Column(name = "board_id")
+    private Long id;
 
     private String title;
+
+    @Lob    // java에선 string이지만 DB에서 long text
     private String content;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public BoardEditor.BoardEditorBuilder toEditor() {
         return BoardEditor.builder()
@@ -33,7 +40,4 @@ public class Board {
         this.title = boardEditor.getTitle();
         this.content = boardEditor.getContent();
     }
-
-
-
 }

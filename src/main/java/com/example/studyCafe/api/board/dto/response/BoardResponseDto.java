@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardResponseDto {
-    private Long postId;
+    private Long id;
     private String title;
     private String content;
     private LocalDateTime createAt;
@@ -21,11 +21,11 @@ public class BoardResponseDto {
         if(board == null) return null;
 
         return BoardResponseDto.builder()
-                .postId(board.getPostId())
+                .id(board.getId())
                 .title(board.getTitle())
                 .content(board.getContent())
-                .createAt(board.getCreateAt())
-                .updateAt(board.getUpdateAt())
+//                .createAt(board.getCreateAt())
+//                .updateAt(board.getUpdateAt())
                 .build();
     }
 }

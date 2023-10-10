@@ -4,6 +4,7 @@ import com.example.studyCafe.api.board.dto.request.BoardWriteReqDto;
 import com.example.studyCafe.api.board.model.Board;
 import com.example.studyCafe.api.board.repository.BoardRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,12 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import static org.springframework.http.MediaType.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -38,6 +38,11 @@ public class BoardControllerDocTest {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @BeforeEach
+    void clean() {
+        boardRepository.deleteAll();
+    }
 
 
     @Test
@@ -104,6 +109,25 @@ public class BoardControllerDocTest {
                             )
                         ));
     }
+
+    @Test
+    @DisplayName("게시물 조회")
+    void boardList() {
+
+    }
+
+    @Test
+    @DisplayName("게시물 수정")
+    void boardEdit() {
+
+    }
+
+    @Test
+    @DisplayName("게시물 삭제")
+    void boardDelete() {
+
+    }
+
 
 
 }

@@ -14,6 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/api")
 @RestController
 public class BoardController {
     private final BoardService boardService;
@@ -24,7 +25,7 @@ public class BoardController {
     }
 
     @GetMapping("/board/{boardId}")
-    public ResponseEntity<BoardResponseDto> callBoardGetOne(@PathVariable(name ="postId") Long id) {
+    public ResponseEntity<BoardResponseDto> callBoardGetOne(@PathVariable(name ="boardId") Long id) {
         return ResponseEntity.ok(boardService.boardOne(id));
     }
 

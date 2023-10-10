@@ -20,7 +20,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
         return jpaQueryFactory.selectFrom(board)
                 .limit(boardSearchReqDto.getSize())
                 .offset(boardSearchReqDto.getOffset())
-                .orderBy(board.postId.desc())
+                .orderBy(board.id.desc())
                 .fetch();
     }
 }

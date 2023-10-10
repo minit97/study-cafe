@@ -25,7 +25,7 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("회원 가입")
+    @DisplayName("회원 가입 - 성공")
     void signup() {
         // given
         SignupDto signupDto = SignupDto.builder()
@@ -45,7 +45,28 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("관리자 전용 user 1명 조회")
+    @DisplayName("본인 조회 - 성공")
+    void my_search() {
+        // given
+        SignupDto signupDto = SignupDto.builder()
+                .username("phm")
+                .password("123")
+                .nickname("박현민")
+                .build();
+        userService.signup(signupDto);
+
+        // when
+        UserDto user = userService.getUserWithAuthorities("phm");
+
+        // then
+        assertNotNull(user);
+        assertEquals(1L, userRepository.count());
+        assertEquals("phm", user.getUsername());
+        assertEquals("박현민", user.getNickname());
+    }
+
+    @Test
+    @DisplayName("관리자 전용 user 1명 조회 - 성공")
     void admin_user_search() {
         // given
         SignupDto signupDto = SignupDto.builder()
