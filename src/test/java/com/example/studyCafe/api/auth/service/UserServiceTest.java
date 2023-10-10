@@ -1,5 +1,6 @@
 package com.example.studyCafe.api.auth.service;
 
+import com.example.studyCafe.api.auth.dto.SignupDto;
 import com.example.studyCafe.api.auth.dto.UserDto;
 import com.example.studyCafe.api.auth.model.User;
 import com.example.studyCafe.api.auth.repository.UserRepository;
@@ -27,14 +28,14 @@ class UserServiceTest {
     @DisplayName("회원 가입")
     void signup() {
         // given
-        UserDto userDto = UserDto.builder()
+        SignupDto signupDto = SignupDto.builder()
                 .username("phm")
                 .password("123")
                 .nickname("박현민")
                 .build();
 
         // when
-        userService.signup(userDto);
+        userService.signup(signupDto);
 
         // then
         assertEquals(1L, userRepository.count());
@@ -47,12 +48,12 @@ class UserServiceTest {
     @DisplayName("관리자 전용 user 1명 조회")
     void admin_user_search() {
         // given
-        UserDto userDto = UserDto.builder()
+        SignupDto signupDto = SignupDto.builder()
                 .username("phm")
                 .password("123")
                 .nickname("박현민")
                 .build();
-        userService.signup(userDto);
+        userService.signup(signupDto);
 
         // when
         UserDto user = userService.getUserWithAuthorities("phm");

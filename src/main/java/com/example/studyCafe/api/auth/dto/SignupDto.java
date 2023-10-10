@@ -6,9 +6,6 @@ import lombok.*;
 
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class SignupDto {
     @NotNull
     @Size(min = 2, max = 50)
@@ -21,4 +18,11 @@ public class SignupDto {
     @NotNull
     @Size(min = 2, max = 50)
     private String nickname;
+
+    @Builder
+    public SignupDto(String username, String password, String nickname) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+    }
 }

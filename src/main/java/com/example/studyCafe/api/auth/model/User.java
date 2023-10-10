@@ -2,10 +2,17 @@ package com.example.studyCafe.api.auth.model;
 
 
 
+import com.example.studyCafe.api.board.model.Board;
+import com.example.studyCafe.api.studycafe.model.Seat;
+import com.example.studyCafe.api.studycafe.model.Spot;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+
+import static jakarta.persistence.GenerationType.*;
 
 @Entity
 @Table(name = "users")
@@ -16,9 +23,9 @@ import java.util.Set;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
     @Column(name = "username", length = 50, unique = true)
     private String username;
@@ -29,8 +36,11 @@ public class User {
     @Column(name = "nickname", length = 50)
     private String nickname;
 
-    @Column(name = "activated")
-    private boolean activated;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Board> boardList = new ArrayList<>();
+
+    @OneToOne
+    private Seat seat;
 
     @ManyToMany
     @JoinTable(

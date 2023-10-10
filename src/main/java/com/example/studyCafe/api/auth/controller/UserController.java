@@ -1,5 +1,6 @@
 package com.example.studyCafe.api.auth.controller;
 
+import com.example.studyCafe.api.auth.dto.SignupDto;
 import com.example.studyCafe.api.auth.dto.UserDto;
 import com.example.studyCafe.api.auth.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,9 +20,9 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<UserDto> signup(
-            @Valid @RequestBody UserDto userDto
+           @Valid @RequestBody SignupDto signupDto
     ) {
-        return ResponseEntity.ok(userService.signup(userDto));
+        return ResponseEntity.ok(userService.signup(signupDto));
     }
 
     @GetMapping("/user")

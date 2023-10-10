@@ -7,9 +7,6 @@ import jakarta.validation.constraints.Size;
 
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class LoginDto {
 
     @NotNull
@@ -19,4 +16,10 @@ public class LoginDto {
     @NotNull
     @Size(min = 3, max = 100)
     private String password;
+
+    @Builder
+    public LoginDto(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }
