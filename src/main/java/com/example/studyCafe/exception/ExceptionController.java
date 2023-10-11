@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import static com.example.studyCafe.util.ApiUtil.ErrorResponse;
 
@@ -27,6 +28,19 @@ public class ExceptionController {
         for (FieldError fieldError : e.getFieldErrors()) {
             response.addValidation(fieldError.getField(), fieldError.getDefaultMessage());
         }
+        return response;
+    }
+
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)    // 컨트롤러 @PathVariable TypeMismatch
+    public ErrorResponse methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
+        ErrorResponse response = ErrorResponse.builder()
+                .code("400")
+                .message("잘못된 요청입니다.")
+                .build();
+        response.addValidation("pathvariable error", "url parameter 확인");
+
         return response;
     }
 
