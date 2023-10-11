@@ -30,7 +30,6 @@ public class BoardService {
         Board board = builder()
                 .title(req.getTitle())
                 .content(req.getContent())
-//                .createAt(LocalDateTime.now())
                 .build();
 
         return BoardResponseDto.from(boardRepository.save(board));

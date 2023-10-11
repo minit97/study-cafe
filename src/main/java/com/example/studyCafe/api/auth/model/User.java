@@ -13,13 +13,14 @@ import java.util.List;
 import java.util.Set;
 
 import static jakarta.persistence.GenerationType.*;
+import static lombok.AccessLevel.*;
 
 @Entity
 @Table(name = "users")
+@NoArgsConstructor(access = PROTECTED)
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class User {
 
     @Id

@@ -24,8 +24,8 @@ public class BoardResponseDto {
                 .id(board.getId())
                 .title(board.getTitle())
                 .content(board.getContent())
-//                .createAt(board.getCreateAt())
-//                .updateAt(board.getUpdateAt())
+                .createAt(board.getCreatedDate())
+                .updateAt(board.getLastModifiedDate())
                 .build();
     }
 }

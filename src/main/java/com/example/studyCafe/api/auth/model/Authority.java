@@ -11,9 +11,9 @@ import static lombok.AccessLevel.*;
 
 @Entity
 @Table(name = "authority")
+@NoArgsConstructor(access = PROTECTED)
 @Getter
 @Setter
-@NoArgsConstructor(access = PROTECTED)
 public class Authority {
 
     @Id

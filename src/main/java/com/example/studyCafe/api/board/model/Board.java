@@ -9,11 +9,9 @@ import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
 
 @Entity
+@NoArgsConstructor(access = PROTECTED)
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor(access = PROTECTED)
-@Builder
 public class Board extends BaseTimeEntity {
 
     @Id
@@ -34,6 +32,13 @@ public class Board extends BaseTimeEntity {
         return BoardEditor.builder()
                 .title(title)
                 .content(content);
+    }
+
+    @Builder
+    public Board(String title, String content, User user) {
+        this.title = title;
+        this.content = content;
+        this.user = user;
     }
 
     public void edit(BoardEditor boardEditor) {
