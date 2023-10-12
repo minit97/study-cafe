@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.example.studyCafe.api.auth.model.Role.*;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -35,12 +37,8 @@ public class UserService {
                 .username(signupDto.getUsername())
                 .password(passwordEncoder.encode(signupDto.getPassword()))
                 .nickname(signupDto.getNickname())
+                .authorities(ROLE_USER)
                 .build();
-        Authority authority = Authority.builder()
-                .authorityName(Role.ROLE_USER)
-                .user(user)
-                .build();
-        authorityRepository.save(authority);
 
         return UserDto.from(userRepository.save(user));
     }

@@ -6,6 +6,8 @@ import lombok.*;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,13 +17,13 @@ public class UserDto {
 
     private String username;
     private String nickname;
-    private Set<AuthorityDto> authorityDtoSet;
+    private List<AuthorityDto> authorityDtoList;
 
     @Builder
-    public UserDto(String username, String nickname, Set<AuthorityDto> authorityDtoSet) {
+    public UserDto(String username, String nickname, List<AuthorityDto> authorityDtoList) {
         this.username = username;
         this.nickname = nickname;
-        this.authorityDtoSet = authorityDtoSet;
+        this.authorityDtoList = authorityDtoList;
     }
 
     public static UserDto from(User user) {
@@ -30,9 +32,11 @@ public class UserDto {
         return UserDto.builder()
                 .username(user.getUsername())
                 .nickname(user.getNickname())
-                .authorityDtoSet(user.getAuthorities().stream()
-                        .map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
-                        .collect(Collectors.toSet()))
+                .authorityDtoList(user.getAuthorities().stream()
+                        .map(authority -> AuthorityDto.builder()
+                                                        .authorityName(authority.getAuthorityName())
+                                                        .build())
+                        .collect(Collectors.toList()))
                 .build();
     }
 }

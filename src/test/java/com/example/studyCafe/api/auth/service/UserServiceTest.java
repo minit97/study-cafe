@@ -2,7 +2,6 @@ package com.example.studyCafe.api.auth.service;
 
 import com.example.studyCafe.api.auth.dto.SignupDto;
 import com.example.studyCafe.api.auth.dto.UserDto;
-import com.example.studyCafe.api.auth.model.Authority;
 import com.example.studyCafe.api.auth.model.User;
 import com.example.studyCafe.api.auth.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,9 +15,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static com.example.studyCafe.api.auth.model.Role.ROLE_USER;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class UserServiceTest {
@@ -64,7 +63,7 @@ class UserServiceTest {
                 .username("test")
                 .password(passwordEncoder.encode("1234"))
                 .nickname("tester")
-                .authorities(Set.of(new Authority("ROLE_USER")))
+                .authorities(ROLE_USER)
                 .build();
         userRepository.save(user);
         UsernamePasswordAuthenticationToken authenticationToken =
@@ -78,9 +77,10 @@ class UserServiceTest {
         // then
         assertEquals("test", resultUser.getUsername());
         assertEquals("tester", resultUser.getNickname());
-        boolean hasUserRole = resultUser.getAuthorityDtoSet()
+        System.out.println(resultUser.getAuthorityDtoList());
+        boolean hasUserRole = resultUser.getAuthorityDtoList()
                 .stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthorityName().equals("ROLE_USER"));
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthorityName().equals(ROLE_USER));
         assertTrue(hasUserRole);
     }
 
@@ -92,7 +92,7 @@ class UserServiceTest {
                 .username("test")
                 .password(passwordEncoder.encode("1234"))
                 .nickname("tester")
-                .authorities(Set.of(new Authority("ROLE_USER")))
+                .authorities(ROLE_USER)
                 .build();
         userRepository.save(user);
 
@@ -102,9 +102,9 @@ class UserServiceTest {
         // then
         assertEquals("test", search.getUsername());
         assertEquals("tester", search.getNickname());
-        boolean hasUserRole = search.getAuthorityDtoSet()
+        boolean hasUserRole = search.getAuthorityDtoList()
                 .stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthorityName().equals("ROLE_USER"));
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthorityName().equals(ROLE_USER));
         assertTrue(hasUserRole);
     }
 

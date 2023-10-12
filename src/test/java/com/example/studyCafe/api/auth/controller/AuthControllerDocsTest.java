@@ -3,6 +3,7 @@ package com.example.studyCafe.api.auth.controller;
 import com.example.studyCafe.api.auth.dto.LoginDto;
 import com.example.studyCafe.api.auth.dto.SignupDto;
 import com.example.studyCafe.api.auth.model.Authority;
+import com.example.studyCafe.api.auth.model.Role;
 import com.example.studyCafe.api.auth.model.User;
 import com.example.studyCafe.api.auth.repository.UserRepository;
 import com.example.studyCafe.config.jwt.TokenProvider;
@@ -27,6 +28,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.Set;
 
+import static com.example.studyCafe.api.auth.model.Role.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -71,7 +73,7 @@ class AuthControllerDocsTest {
                 .username("test")
                 .password(passwordEncoder.encode("1234"))
                 .nickname("tester")
-                .authorities(Set.of(new Authority("ROLE_USER")))
+                .authorities(ROLE_USER)
                 .build();
         userRepository.save(user);
 
@@ -127,7 +129,7 @@ class AuthControllerDocsTest {
                         responseFields(
                                 fieldWithPath("username").description("아이디"),
                                 fieldWithPath("nickname").description("비밀번호"),
-                                fieldWithPath("authorityDtoSet[].authorityName").description("권한")
+                                fieldWithPath("authorityDtoList[].authorityName").description("권한")
                         )
                 ));
     }
@@ -141,7 +143,7 @@ class AuthControllerDocsTest {
                 .username("test")
                 .password(passwordEncoder.encode("1234"))
                 .nickname("tester")
-                .authorities(Set.of(new Authority("ROLE_USER")))
+                .authorities(ROLE_USER)
                 .build();
         userRepository.save(user);
 
@@ -161,7 +163,7 @@ class AuthControllerDocsTest {
                         responseFields(
                                 fieldWithPath("username").description("아이디"),
                                 fieldWithPath("nickname").description("비밀번호"),
-                                fieldWithPath("authorityDtoSet[].authorityName").description("권한")
+                                fieldWithPath("authorityDtoList[].authorityName").description("권한")
                         )
                 ));
     }
@@ -173,14 +175,14 @@ class AuthControllerDocsTest {
                 .username("test")
                 .password(passwordEncoder.encode("1234"))
                 .nickname("tester")
-                .authorities(Set.of(new Authority("ROLE_ADMIN")))
+                .authorities(ROLE_ADMIN)
                 .build();
         userRepository.save(user);
         User searcher = User.builder()
                 .username("search")
                 .password(passwordEncoder.encode("1234"))
                 .nickname("searcher")
-                .authorities(Set.of(new Authority("ROLE_USER")))
+                .authorities(ROLE_USER)
                 .build();
         userRepository.save(searcher);
 
@@ -200,7 +202,7 @@ class AuthControllerDocsTest {
                         responseFields(
                                 fieldWithPath("username").description("아이디"),
                                 fieldWithPath("nickname").description("비밀번호"),
-                                fieldWithPath("authorityDtoSet[].authorityName").description("권한")
+                                fieldWithPath("authorityDtoList[].authorityName").description("권한")
                         )
                 ));
     }

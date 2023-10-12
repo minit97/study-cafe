@@ -1,6 +1,7 @@
 package com.example.studyCafe.api.auth.service;
 
 import com.example.studyCafe.api.auth.model.Authority;
+import com.example.studyCafe.api.auth.model.Role;
 import com.example.studyCafe.api.auth.model.User;
 import com.example.studyCafe.api.auth.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 
+import static com.example.studyCafe.api.auth.model.Role.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -44,7 +46,7 @@ class CustomUserDetailsServiceTest {
                 .username("test")
                 .password(passwordEncoder.encode("1234"))
                 .nickname("tester")
-                .authorities(Set.of(new Authority("ROLE_USER")))
+                .authorities(ROLE_USER)
                 .build();
         userRepository.save(user);
 
@@ -69,7 +71,7 @@ class CustomUserDetailsServiceTest {
                 .username("test")
                 .password(passwordEncoder.encode("1234"))
                 .nickname("tester")
-                .authorities(Set.of(new Authority("ROLE_USER")))
+                .authorities(ROLE_USER)
                 .build();
         userRepository.save(user);
 
@@ -87,7 +89,7 @@ class CustomUserDetailsServiceTest {
                 .username("test")
                 .password(passwordEncoder.encode("1234"))
                 .nickname("tester")
-                .authorities(Set.of(new Authority("ROLE_USER")))
+                .authorities(ROLE_USER)
                 .build();
         userRepository.save(user);
 
