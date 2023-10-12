@@ -2,9 +2,6 @@ insert into users (username, password, nickname) values ('admin', '$2a$08$lDnHPz
 insert into users (username, password, nickname) values ('user', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'user');
 
 
-insert into authority (authority_name) values ('ROLE_USER');
-insert into authority (authority_name) values ('ROLE_ADMIN');
-
-insert into user_authority (user_id, authority_name) values (1, 'ROLE_USER');
-insert into user_authority (user_id, authority_name) values (1, 'ROLE_ADMIN');
-insert into user_authority (user_id, authority_name) values (2, 'ROLE_USER');
+insert into authority (authority_name, user_id) values ('ROLE_USER', 1);
+insert into authority (authority_name, user_id) values ('ROLE_USER', 2);
+insert into authority (authority_name, user_id) values ('ROLE_ADMIN', 1);

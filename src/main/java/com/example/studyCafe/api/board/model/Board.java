@@ -3,15 +3,16 @@ package com.example.studyCafe.api.board.model;
 import com.example.studyCafe.api.auth.model.User;
 import com.example.studyCafe.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.FetchType.*;
-import static lombok.AccessLevel.*;
+import static jakarta.persistence.FetchType.LAZY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-@Setter
 public class Board extends BaseTimeEntity {
 
     @Id

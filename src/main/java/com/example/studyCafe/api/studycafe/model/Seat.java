@@ -2,20 +2,18 @@ package com.example.studyCafe.api.studycafe.model;
 
 import com.example.studyCafe.api.auth.model.User;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
+@Getter
 public class Seat {
 
     @Id
@@ -33,11 +31,12 @@ public class Seat {
     @Column(name = "exit_time")
     private LocalDateTime exitTime;
 
+    @OneToOne(fetch = LAZY)
+    private User user;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "spot_id")
     private Spot spot;
 
-    @OneToOne
-    private User user;
 
 }
