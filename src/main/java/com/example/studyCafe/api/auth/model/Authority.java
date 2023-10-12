@@ -1,28 +1,38 @@
 package com.example.studyCafe.api.auth.model;
 
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-import static lombok.AccessLevel.*;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.FetchType.LAZY;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Table(name = "authority")
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-@Setter
 public class Authority {
 
     @Id
-    @Column(name = "authority_name", length = 50)
-    private String authorityName;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "authority_id")
+    private Long id;
+
+    @Enumerated(value = STRING)
+    @Column(name = "authority_name")
+    private Role authorityName;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Builder
-    public Authority(String authorityName) {
+    public Authority(Role authorityName, User user) {
         this.authorityName = authorityName;
+        this.user = user;
     }
 }
 
