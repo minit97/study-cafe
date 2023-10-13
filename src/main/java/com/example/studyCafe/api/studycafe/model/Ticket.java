@@ -2,6 +2,7 @@ package com.example.studyCafe.api.studycafe.model;
 
 import com.example.studyCafe.entity.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,9 +23,15 @@ public class Ticket extends BaseTimeEntity {
     private String name;
 
     @Column(name = "ticket_price")
-    private int price;
+    private Integer price;
 
     @Column(name = "ticket_time")
     private LocalDateTime ticketTime;
 
+    @Builder
+    public Ticket(String name, int price, LocalDateTime ticketTime) {
+        this.name = name;
+        this.price = price;
+        this.ticketTime = ticketTime;
+    }
 }

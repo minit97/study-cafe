@@ -1,6 +1,7 @@
 package com.example.studyCafe.api.studycafe.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,7 +25,12 @@ public class Spot {
     @Column(name = "spot_phone")
     private String phone;
 
-    @OneToMany(mappedBy = "spot", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "spot", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seat> seat;
 
+    @Builder
+    public Spot(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
 }

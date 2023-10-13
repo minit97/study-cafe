@@ -3,9 +3,11 @@
 - 후에 프론트 작업 예정..
 
 
-# ERD 구조 (작업 중...)
+# ERD 구조
 
 [👉 ERD Cloud에서 직접 보기](https://www.erdcloud.com/d/uSj93GWqSBAGewqYB)
+
+
 
 # Spring REST Docs
 
@@ -13,3 +15,5 @@
 - 장점이자 단점인 테스트 코드가 성공해야 문서 작성이 가능하다.
 
 ![img.png](img.png)
+
+- 빌드 시 resources - static - docs 파일에 html 파일 생성

@@ -3,11 +3,14 @@ package com.example.studyCafe.api.auth.model;
 
 import com.example.studyCafe.api.board.model.Board;
 import com.example.studyCafe.api.studycafe.model.Seat;
+import com.example.studyCafe.api.studycafe.model.UserSeat;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +20,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Table(name = "users")
+@Table(name = "Users")
 @NoArgsConstructor(access = PROTECTED)
 @Getter
 public class User {
@@ -36,6 +39,9 @@ public class User {
     @Column(length = 50)
     private String nickname;
 
+    @Column(name = "remained_time")
+    private LocalDateTime remainedTime;
+
     // cascade : 부모객체 수정시 자식객체도 적용 / orphanRemoval : 해당 컬렉션에서 삭제시 자식객체도 삭제
     @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
     private List<Authority> authorities = new ArrayList<>();
@@ -43,8 +49,8 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = ALL)
     private List<Board> boardList = new ArrayList<>();
 
-    @OneToOne(fetch = LAZY)
-    private Seat seat;
+    @OneToOne(mappedBy = "user", fetch = LAZY)
+    private UserSeat userSeat;
 
     @Builder
     public User(String username, String password, String nickname, Role authorities) {
@@ -57,5 +63,8 @@ public class User {
                 .authorityName(authorities)
                 .build();
         this.authorities.add(role);
+    }
+
+    public void addRemainedTime(LocalDateTime addTime) {
     }
 }
