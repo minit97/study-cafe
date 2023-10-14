@@ -5,19 +5,19 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static jakarta.persistence.GenerationType.*;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Table(name = "User_seat")
+@Table(name = "user_seat")
 @NoArgsConstructor(access = PROTECTED)
 @Getter
 public class UserSeat {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "user_seat_id")
     private Long id;
 

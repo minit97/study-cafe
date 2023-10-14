@@ -6,8 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
+import static jakarta.persistence.GenerationType.*;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -16,7 +15,7 @@ import static lombok.AccessLevel.PROTECTED;
 public class Ticket extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Column(name = "ticket_name")
@@ -26,12 +25,12 @@ public class Ticket extends BaseTimeEntity {
     private Integer price;
 
     @Column(name = "ticket_time")
-    private LocalDateTime ticketTime;
+    private Integer time;     //시간권
 
     @Builder
-    public Ticket(String name, int price, LocalDateTime ticketTime) {
+    public Ticket(String name, Integer price, Integer time) {
         this.name = name;
         this.price = price;
-        this.ticketTime = ticketTime;
+        this.time = time;
     }
 }

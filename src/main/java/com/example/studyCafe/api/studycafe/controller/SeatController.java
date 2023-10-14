@@ -16,6 +16,8 @@ public class SeatController {
     // 어드민 - 자리 등록
     @PostMapping("/admin/seat")
     public void seatAdd() {
+
+
     }
 
     // 어드민 - 자리 삭제
@@ -36,7 +38,10 @@ public class SeatController {
 
     }
 
+    // 퇴장하기
+    @PostMapping("/seat-exit")
+    public void seatExit() {
 
-
+    }
 
 }

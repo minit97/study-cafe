@@ -4,13 +4,23 @@ import com.example.studyCafe.api.auth.model.User;
 import com.example.studyCafe.api.auth.repository.UserRepository;
 import com.example.studyCafe.api.studycafe.dto.request.TicketAddRequest;
 import com.example.studyCafe.api.studycafe.dto.request.TicketBuyRequest;
+import com.example.studyCafe.api.studycafe.dto.request.TicketSearchRequest;
+import com.example.studyCafe.api.studycafe.dto.response.TicketResponse;
 import com.example.studyCafe.api.studycafe.model.Ticket;
 import com.example.studyCafe.api.studycafe.repository.TicketRepository;
 import com.example.studyCafe.exception.customException.InvalidRequest;
 import com.example.studyCafe.exception.securityException.NotFoundMemberException;
+import com.querydsl.core.QueryResults;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.studyCafe.util.SecurityUtil.getCurrentUsername;
 
@@ -25,7 +35,7 @@ public class TicketService {
         Ticket data = Ticket.builder()
                 .name(request.getTicketName())
                 .price(request.getTicketPrice())
-                .ticketTime(request.getTicketTime())
+                .time(request.getTicketTime())
                 .build();
         ticketRepository.save(data);
     }
@@ -36,8 +46,19 @@ public class TicketService {
         ticketRepository.delete(ticket);
     }
 
+    public Page<TicketResponse> getTicketList(TicketSearchRequest request, Pageable pageable) {
+        QueryResults<Ticket> queryResults = ticketRepository.searchTicketList(request, pageable);
 
-    public void getTicketBuy(TicketBuyRequest request) {
+        long totalCnt = queryResults.getTotal();
+        List<Ticket> resultsList = queryResults.getResults();
+        List<TicketResponse> dtoList = resultsList.stream()
+                .map(TicketResponse::from)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(dtoList, pageable, totalCnt);
+    }
+
+    public Duration getTicketBuy(TicketBuyRequest request) {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new NotFoundMemberException("request id member not found"));
         String securityUser = getCurrentUsername()
@@ -49,5 +70,11 @@ public class TicketService {
         // 결제 로직
         // ...
 
+        Ticket ticket = ticketRepository.findById(request.getTicketId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 티켓은 없습니다."));
+        Duration duration = user.addRemainedTime(ticket.getTime());
+        return duration;
     }
+
+
 }

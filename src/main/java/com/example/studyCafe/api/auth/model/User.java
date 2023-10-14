@@ -2,7 +2,6 @@ package com.example.studyCafe.api.auth.model;
 
 
 import com.example.studyCafe.api.board.model.Board;
-import com.example.studyCafe.api.studycafe.model.Seat;
 import com.example.studyCafe.api.studycafe.model.UserSeat;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -10,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +38,7 @@ public class User {
     private String nickname;
 
     @Column(name = "remained_time")
-    private LocalDateTime remainedTime;
+    private Duration remainedTime;
 
     // cascade : 부모객체 수정시 자식객체도 적용 / orphanRemoval : 해당 컬렉션에서 삭제시 자식객체도 삭제
     @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
@@ -65,6 +63,8 @@ public class User {
         this.authorities.add(role);
     }
 
-    public void addRemainedTime(LocalDateTime addTime) {
+    public Duration addRemainedTime(Integer addTime) {
+        this.remainedTime.plusHours(addTime);
+        return remainedTime;
     }
 }

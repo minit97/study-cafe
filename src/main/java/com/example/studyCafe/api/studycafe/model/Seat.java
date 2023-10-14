@@ -1,14 +1,11 @@
 package com.example.studyCafe.api.studycafe.model;
 
-import com.example.studyCafe.api.auth.model.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
-
-import java.time.LocalDateTime;
 
 import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -17,7 +14,7 @@ import static lombok.AccessLevel.PROTECTED;
 public class Seat {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "seat_id")
     private Long id;
 

@@ -12,15 +12,13 @@ public class BoardSearchReqDto {
 
     private static final int MAX_SIZE = 2000;
 
-    @Builder.Default
-    private Integer page = 1;
-    @Builder.Default
-    private Integer size = 10;
+    private Integer page;
+    private Integer size;
 
     @Builder
     public BoardSearchReqDto(Integer page, Integer size) {
-        this.page = page;
-        this.size = size;
+        this.page = page == null ? 1 : page;
+        this.size = size == null ? 10 : size;
     }
 
     public long getOffset() {
