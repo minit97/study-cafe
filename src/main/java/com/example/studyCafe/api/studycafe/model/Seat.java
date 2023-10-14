@@ -1,6 +1,7 @@
 package com.example.studyCafe.api.studycafe.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,14 +23,23 @@ public class Seat {
     private Integer seatNum;
 
     @Column(name = "seat_active" )
-    private boolean active;
+    private Boolean active;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "spot_id")
     private Spot spot;
 
-    @OneToOne(mappedBy = "seat")
+    @OneToOne(fetch = LAZY, mappedBy = "seat")
     private UserSeat userSeat;
 
+    @Builder
+    public Seat(Integer seatNum, boolean active, Spot spot) {
+        this.seatNum = seatNum;
+        this.active = active;
+        this.spot = spot;
+    }
 
+    public void seatIsActiveChange(boolean active) {
+        this.active = active;
+    }
 }

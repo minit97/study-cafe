@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class SpotService {
     private final SpotRepository spotRepository;
 
+    @Transactional
     public void getAdminSpotAdd(SpotAddRequest request) {
         Spot data = Spot.builder()
                 .name(request.getName())
@@ -29,12 +31,14 @@ public class SpotService {
         spotRepository.save(data);
     }
 
+    @Transactional
     public void getAdminSpotDel(Long spotId) {
         Spot spot = spotRepository.findById(spotId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 지점입니다."));
         spotRepository.delete(spot);
     }
 
+    @Transactional(readOnly = true)
     public Page<SpotResponse> getSpotList(Pageable pageable) {
         QueryResults<Spot> queryResults = spotRepository.searchSpotList(pageable);
         long total = queryResults.getTotal();

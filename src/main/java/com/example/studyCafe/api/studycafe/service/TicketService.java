@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.util.List;
@@ -31,6 +32,7 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     public void getAdminTicketAdd(TicketAddRequest request) {
         Ticket data = Ticket.builder()
                 .name(request.getTicketName())
@@ -40,12 +42,14 @@ public class TicketService {
         ticketRepository.save(data);
     }
 
+    @Transactional
     public void getAdminTicketDel(Long ticketId) {
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 티켓입니다."));
         ticketRepository.delete(ticket);
     }
 
+    @Transactional(readOnly = true)
     public Page<TicketResponse> getTicketList(TicketSearchRequest request, Pageable pageable) {
         QueryResults<Ticket> queryResults = ticketRepository.searchTicketList(request, pageable);
 
@@ -58,6 +62,7 @@ public class TicketService {
         return new PageImpl<>(dtoList, pageable, totalCnt);
     }
 
+    @Transactional
     public Duration getTicketBuy(TicketBuyRequest request) {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new NotFoundMemberException("request id member not found"));

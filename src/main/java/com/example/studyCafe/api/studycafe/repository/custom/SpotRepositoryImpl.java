@@ -24,6 +24,5 @@ public class SpotRepositoryImpl implements SpotRepositoryCustom {
                 .limit(pageable.getPageSize())
                 .fetchResults();
         return results;
-
     }
 }

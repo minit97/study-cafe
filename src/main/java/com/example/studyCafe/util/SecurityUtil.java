@@ -1,5 +1,6 @@
 package com.example.studyCafe.util;
 
+import jdk.incubator.foreign.SymbolLookup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -32,4 +33,5 @@ public class SecurityUtil {
 
         return Optional.ofNullable(username);
     }
+
 }
