@@ -46,6 +46,5 @@ public class TicketController {
     public ResponseEntity<?> ticketBuy(@RequestBody @Valid TicketBuyRequest request) {
         Duration remainedTime = ticketService.getTicketBuy(request);
         return ResponseEntity.ok(remainedTime);
-
     }
 }

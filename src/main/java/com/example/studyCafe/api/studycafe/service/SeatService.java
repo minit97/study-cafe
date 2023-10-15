@@ -16,7 +16,6 @@ import com.example.studyCafe.api.studycafe.repository.SpotRepository;
 import com.example.studyCafe.api.studycafe.repository.UserSeatRepository;
 import com.example.studyCafe.exception.securityException.NotFoundMemberException;
 import com.querydsl.core.QueryResults;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
