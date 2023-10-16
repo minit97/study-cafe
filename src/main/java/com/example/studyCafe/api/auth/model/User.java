@@ -18,7 +18,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 @NoArgsConstructor(access = PROTECTED)
 @Getter
 public class User {

@@ -7,7 +7,7 @@
 
 [👉 ERD Cloud에서 직접 보기](https://www.erdcloud.com/d/uSj93GWqSBAGewqYB)
 
-
+![img_1.png](img_1.png)
 
 # Spring REST Docs
 
