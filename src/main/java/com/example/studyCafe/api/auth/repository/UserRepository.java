@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @EntityGraph(attributePaths = "authorities")    // lazy 로딩 대신 eager 로딩
+    @EntityGraph(attributePaths = "authorities")
     Optional<User> findOneWithAuthoritiesByUsername(String username);
 }

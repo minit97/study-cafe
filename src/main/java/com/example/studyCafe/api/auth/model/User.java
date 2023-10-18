@@ -63,8 +63,13 @@ public class User {
         this.authorities.add(role);
     }
 
-    public Duration addRemainedTime(Integer addTime) {
+    public Duration buyTicketPlusTime(Integer addTime) {
         this.remainedTime.plusHours(addTime);
         return remainedTime;
     }
+    public Duration minusRemainedTime(Duration minusTime) {
+        this.remainedTime.minus(minusTime);
+        return remainedTime;
+    }
+
 }

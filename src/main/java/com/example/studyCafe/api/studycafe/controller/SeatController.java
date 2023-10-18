@@ -5,6 +5,7 @@ import com.example.studyCafe.api.studycafe.dto.request.SeatExitRequest;
 import com.example.studyCafe.api.studycafe.dto.request.SeatPickRequest;
 import com.example.studyCafe.api.studycafe.dto.request.SeatSearchRequest;
 import com.example.studyCafe.api.studycafe.dto.response.SeatResponse;
+import com.example.studyCafe.api.studycafe.dto.response.UserSeatReponse;
 import com.example.studyCafe.api.studycafe.service.SeatService;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -50,8 +51,9 @@ public class SeatController {
 
     // 퇴장하기
     @PostMapping("/seat-exit")
-    public void seatExit(@RequestBody SeatExitRequest request) {
-        seatService.getSeatExit(request);
+    public ResponseEntity<UserSeatReponse> seatExit(@RequestBody SeatExitRequest request) {
+        UserSeatReponse seatExit = seatService.getSeatExit(request);
+        return ResponseEntity.ok(seatExit);
     }
 
 }

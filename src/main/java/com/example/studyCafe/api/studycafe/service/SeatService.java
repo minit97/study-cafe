@@ -8,6 +8,7 @@ import com.example.studyCafe.api.studycafe.dto.request.SeatExitRequest;
 import com.example.studyCafe.api.studycafe.dto.request.SeatPickRequest;
 import com.example.studyCafe.api.studycafe.dto.request.SeatSearchRequest;
 import com.example.studyCafe.api.studycafe.dto.response.SeatResponse;
+import com.example.studyCafe.api.studycafe.dto.response.UserSeatReponse;
 import com.example.studyCafe.api.studycafe.model.Seat;
 import com.example.studyCafe.api.studycafe.model.Spot;
 import com.example.studyCafe.api.studycafe.model.UserSeat;
@@ -24,6 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -89,7 +91,14 @@ public class SeatService {
         return SeatResponse.from(userSeatRepository.save(build).getSeat());
     }
 
-    public void getSeatExit(SeatExitRequest request) {
+    @Transactional
+    public UserSeatReponse getSeatExit(SeatExitRequest request) {
+        UserSeat userSeat = userSeatRepository.findById(request.getSeatId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 자리는 오류가 있습니다."));
+        userSeat.getSeat().seatIsActiveChange(false);
+        Duration minusTime = Duration.between(userSeat.getEntryTime(), LocalDateTime.now());
+        userSeat.getUser().minusRemainedTime(minusTime);
 
+        return UserSeatReponse.from(userSeat);
     }
 }

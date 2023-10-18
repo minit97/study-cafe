@@ -77,7 +77,7 @@ public class TicketService {
 
         Ticket ticket = ticketRepository.findById(request.getTicketId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 티켓은 없습니다."));
-        Duration duration = user.addRemainedTime(ticket.getTime());
+        Duration duration = user.buyTicketPlusTime(ticket.getTime());
         return duration;
     }
 
