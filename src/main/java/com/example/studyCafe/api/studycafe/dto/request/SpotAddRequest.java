@@ -8,7 +8,6 @@ import lombok.Data;
 public class SpotAddRequest {
     @NotBlank
     private String name;
-
     @NotBlank
     private String phone;
 
