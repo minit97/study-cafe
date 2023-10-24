@@ -28,7 +28,7 @@ public class TicketResponse {
                 .ticketId(ticket.getId())
                 .ticketName(ticket.getName())
                 .ticketPrice(ticket.getPrice())
-                .ticketTime(builder().ticketTime)
+                .ticketTime(ticket.getTime())
                 .build();
     }
 }

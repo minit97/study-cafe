@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,10 +52,11 @@ public class User {
     private UserSeat userSeat;
 
     @Builder
-    public User(String username, String password, String nickname, Role authorities) {
+    public User(String username, String password, String nickname, Role authorities, Integer remainedTime) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
+        this.remainedTime = Duration.ofHours(remainedTime);
 
         Authority role = Authority.builder()
                 .user(this)
@@ -64,11 +66,11 @@ public class User {
     }
 
     public Duration buyTicketPlusTime(Integer addTime) {
-        this.remainedTime.plusHours(addTime);
+        this.remainedTime = remainedTime.plusHours(addTime);
         return remainedTime;
     }
     public Duration minusRemainedTime(Duration minusTime) {
-        this.remainedTime.minus(minusTime);
+        this.remainedTime = remainedTime.minus(minusTime);
         return remainedTime;
     }
 
