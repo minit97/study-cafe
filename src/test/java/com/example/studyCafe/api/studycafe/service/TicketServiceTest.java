@@ -8,6 +8,7 @@ import com.example.studyCafe.api.studycafe.dto.request.TicketSearchRequest;
 import com.example.studyCafe.api.studycafe.dto.response.TicketResponse;
 import com.example.studyCafe.api.studycafe.model.Ticket;
 import com.example.studyCafe.api.studycafe.repository.TicketRepository;
+import com.example.studyCafe.testUtil.SecurityTestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,9 +41,7 @@ class TicketServiceTest {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private SecurityTestUtil securityTestUtil;
 
     @BeforeEach
     void clean() {
@@ -125,7 +124,7 @@ class TicketServiceTest {
         // given
         User user = User.builder()
                 .username("phm")
-                .password(passwordEncoder.encode("1234"))
+                .password(securityTestUtil.passwordEncoder("1234"))
                 .nickname("박현민")
                 .authorities(ROLE_USER)
                 .remainedTime(0)
@@ -143,10 +142,7 @@ class TicketServiceTest {
                 .build();
 
         // 토큰 세팅
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken("phm", "1234");
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        securityTestUtil.securityTokenSetting("phm", "1234");
 
         // when
         Duration remainedTime = ticketService.getTicketBuy(request);

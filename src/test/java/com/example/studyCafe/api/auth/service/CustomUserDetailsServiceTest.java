@@ -1,9 +1,8 @@
 package com.example.studyCafe.api.auth.service;
 
-import com.example.studyCafe.api.auth.model.Authority;
-import com.example.studyCafe.api.auth.model.Role;
 import com.example.studyCafe.api.auth.model.User;
 import com.example.studyCafe.api.auth.repository.UserRepository;
+import com.example.studyCafe.testUtil.SecurityTestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,11 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Set;
-
-import static com.example.studyCafe.api.auth.model.Role.*;
+import static com.example.studyCafe.api.auth.model.Role.ROLE_USER;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -29,9 +25,9 @@ class CustomUserDetailsServiceTest {
     @Autowired
     private CustomUserDetailsService userDetailsService;
     @Autowired
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
+    private SecurityTestUtil securityTestUtil;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @BeforeEach
     void clean() {
@@ -44,7 +40,7 @@ class CustomUserDetailsServiceTest {
         // given
         User user = User.builder()
                 .username("test")
-                .password(passwordEncoder.encode("1234"))
+                .password(securityTestUtil.passwordEncoder("1234"))
                 .nickname("tester")
                 .authorities(ROLE_USER)
                 .build();
@@ -69,7 +65,7 @@ class CustomUserDetailsServiceTest {
         // given
         User user = User.builder()
                 .username("test")
-                .password(passwordEncoder.encode("1234"))
+                .password(securityTestUtil.passwordEncoder("1234"))
                 .nickname("tester")
                 .authorities(ROLE_USER)
                 .build();
@@ -87,7 +83,7 @@ class CustomUserDetailsServiceTest {
         // given
         User user = User.builder()
                 .username("test")
-                .password(passwordEncoder.encode("1234"))
+                .password(securityTestUtil.passwordEncoder("1234"))
                 .nickname("tester")
                 .authorities(ROLE_USER)
                 .build();

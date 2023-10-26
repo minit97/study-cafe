@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
-        this.remainedTime = Duration.ofHours(remainedTime);
+        this.remainedTime = remainedTime != null ? Duration.ofHours(remainedTime) : Duration.ofHours(0);
 
         Authority role = Authority.builder()
                 .user(this)

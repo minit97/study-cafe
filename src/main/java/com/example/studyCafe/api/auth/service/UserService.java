@@ -2,8 +2,6 @@ package com.example.studyCafe.api.auth.service;
 
 import com.example.studyCafe.api.auth.dto.SignupDto;
 import com.example.studyCafe.api.auth.dto.UserDto;
-import com.example.studyCafe.api.auth.model.Authority;
-import com.example.studyCafe.api.auth.model.Role;
 import com.example.studyCafe.api.auth.model.User;
 import com.example.studyCafe.api.auth.repository.AuthorityRepository;
 import com.example.studyCafe.api.auth.repository.UserRepository;
@@ -16,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.example.studyCafe.api.auth.model.Role.*;
+import static com.example.studyCafe.api.auth.model.Role.ROLE_USER;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,6 +36,7 @@ public class UserService {
                 .password(passwordEncoder.encode(signupDto.getPassword()))
                 .nickname(signupDto.getNickname())
                 .authorities(ROLE_USER)
+                .remainedTime(0)
                 .build();
 
         return UserDto.from(userRepository.save(user));

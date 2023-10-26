@@ -4,16 +4,12 @@ import com.example.studyCafe.api.auth.dto.SignupDto;
 import com.example.studyCafe.api.auth.dto.UserDto;
 import com.example.studyCafe.api.auth.model.User;
 import com.example.studyCafe.api.auth.repository.UserRepository;
+import com.example.studyCafe.testUtil.SecurityTestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static com.example.studyCafe.api.auth.model.Role.ROLE_USER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,9 +22,8 @@ class UserServiceTest {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private SecurityTestUtil securityTestUtil;
+
 
     @BeforeEach
     void clean() {
@@ -61,15 +56,12 @@ class UserServiceTest {
         // given
         User user = User.builder()
                 .username("test")
-                .password(passwordEncoder.encode("1234"))
+                .password(securityTestUtil.passwordEncoder("1234"))
                 .nickname("tester")
                 .authorities(ROLE_USER)
                 .build();
         userRepository.save(user);
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken("test", "1234");
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        securityTestUtil.securityTokenSetting("test", "1234");
 
         // when
         UserDto resultUser = userService.getMyUserWithAuthorities();
@@ -90,7 +82,7 @@ class UserServiceTest {
         // given
         User user = User.builder()
                 .username("test")
-                .password(passwordEncoder.encode("1234"))
+                .password(securityTestUtil.passwordEncoder("1234"))
                 .nickname("tester")
                 .authorities(ROLE_USER)
                 .build();
