@@ -29,7 +29,7 @@ public class Seat {
     @JoinColumn(name = "spot_id")
     private Spot spot;
 
-    @OneToOne(fetch = LAZY, mappedBy = "seat")
+    @OneToOne(fetch = LAZY, mappedBy = "seat", cascade = CascadeType.ALL)
     private UserSeat userSeat;
 
     @Builder
