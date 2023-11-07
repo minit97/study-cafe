@@ -20,4 +20,6 @@ public class StudyCafeControllerDocsTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+
 }

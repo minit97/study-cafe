@@ -1,6 +1,28 @@
-# study-cafe
-- 스터디 카페 관리 및 사용을 위한 웹개발 (api)
+# HM study-cafe
 
+
+# 프로젝트 소개
+> 다니던 스터디 카페의 UX/UI의 불편함으로 시작했습니다.  
+> 스터디 카페 관리 및 사용을 위한 웹개발이 주제입니다.  
+> 개인 프로젝트로 진행합니다.
+
+### FrontEnd
+![React](https://img.shields.io/badge/-React-61DAFB?style=for-the-badge&logo=React&logoColor=fff)
+![Material-ui](https://img.shields.io/badge/-Material_ui-007FFF?style=for-the-badge&logo=MUI&logoColor=fff)
+- 프론트는 reactjs, material-ui를 사용했습니다.
+- [템플릿](https://github.com/devraccon/React-Material-Sample) 사용 및 수정하였습니다.
+### BackEnd 
+![Java11](https://img.shields.io/badge/JAVA11-007396?style=for-the-badge&logo=java&logoColor=fff)
+![SpringBoot](https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=fff)
+![SpringSecurity](https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=Spring%20Security&logoColor=fff)
+![JUnit5](https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=JUnit5&logoColor=fff)
+- Java11, Spring-Boot3, Spring-Security, Spring-Data-JPA, QueryDSL, Spring-REST-Docs, Junit5 를 사용하였습니다.
+- Spring Rest Docs를 사용하여 API 문서화를 했습니다.
+### DevOps
+![AWS-EC2](https://img.shields.io/badge/AWS_EC2-FF9900?style=for-the-badge&logo=AmazonEC2&logoColor=fff)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=fff)
+<!-- ![AWS-S3](https://img.shields.io/badge/AWS_S3-569A31?style=for-the-badge&logo=AmazonS3&logoColor=fff) -->
+- EC2, Docker, Docker-Hub 를 사용하여 배포하였습니다.
 
 # ERD 구조
 

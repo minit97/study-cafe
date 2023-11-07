@@ -20,4 +20,6 @@ public class AdminControllerDocsTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+
 }
