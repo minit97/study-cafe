@@ -14,6 +14,8 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from 'src/components/Page';
+import {value} from "lodash/seq";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,38 +30,48 @@ const RegisterView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
 
+  const signupValidation = Yup.object().shape({
+    email: Yup.string().max(255).required('Email is required'),
+    nickname: Yup.string().max(255).required('Nickname is required'),
+    password: Yup.string().max(255).required('password is required'),
+    policy: Yup.boolean().oneOf([true], 'This field must be checked')
+  })
+
+  const signup = async (values) => {
+    const data = {
+      username: values.email,
+      password: values.password,
+      nickname: values.nickname
+    };
+
+    try {
+      const promise = await axios.post('/api/signup', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      alert("회원가입 성공!")
+      navigate('/login', { replace: true });
+    }catch(error) {
+      alert(error.response.data.message);
+    }
+  }
+
+
   return (
-    <Page
-      className={classes.root}
-      title="Register"
-    >
-      <Box
-        display="flex"
-        flexDirection="column"
-        height="100%"
-        justifyContent="center"
-      >
+    <Page className={classes.root} title="Register">
+      <Box display="flex" flexDirection="column" height="100%" justifyContent="center">
         <Container maxWidth="sm">
           <Formik
             initialValues={{
               email: '',
-              firstName: '',
-              lastName: '',
+              nickname: '',
               password: '',
               policy: false
             }}
-            validationSchema={
-              Yup.object().shape({
-                email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                firstName: Yup.string().max(255).required('First name is required'),
-                lastName: Yup.string().max(255).required('Last name is required'),
-                password: Yup.string().max(255).required('password is required'),
-                policy: Yup.boolean().oneOf([true], 'This field must be checked')
-              })
-            }
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
-            }}
+            validationSchema={signupValidation}
+            onSubmit={signup}
           >
             {({
               errors,
@@ -72,44 +84,13 @@ const RegisterView = () => {
             }) => (
               <form onSubmit={handleSubmit}>
                 <Box mb={3}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h2"
-                  >
+                  <Typography color="textPrimary" variant="h2">
                     Create new account
                   </Typography>
-                  <Typography
-                    color="textSecondary"
-                    gutterBottom
-                    variant="body2"
-                  >
+                  <Typography color="textSecondary" gutterBottom variant="body2">
                     Use your email to create new account
                   </Typography>
                 </Box>
-                <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
-                  fullWidth
-                  helperText={touched.firstName && errors.firstName}
-                  label="First name"
-                  margin="normal"
-                  name="firstName"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.firstName}
-                  variant="outlined"
-                />
-                <TextField
-                  error={Boolean(touched.lastName && errors.lastName)}
-                  fullWidth
-                  helperText={touched.lastName && errors.lastName}
-                  label="Last name"
-                  margin="normal"
-                  name="lastName"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
-                  variant="outlined"
-                />
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
@@ -136,38 +117,35 @@ const RegisterView = () => {
                   value={values.password}
                   variant="outlined"
                 />
-                <Box
-                  alignItems="center"
-                  display="flex"
-                  ml={-1}
-                >
-                  <Checkbox
-                    checked={values.policy}
-                    name="policy"
-                    onChange={handleChange}
-                  />
-                  <Typography
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    I have read the
-                    {' '}
-                    <Link
-                      color="primary"
-                      component={RouterLink}
-                      to="#"
-                      underline="always"
-                      variant="h6"
-                    >
+                <TextField
+                  error={Boolean(touched.nickname && errors.nickname)}
+                  fullWidth
+                  helperText={touched.nickname && errors.nickname}
+                  label="Nickname"
+                  margin="normal"
+                  name="nickname"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.nickname}
+                  variant="outlined"
+                />
+
+                <Box alignItems="center" display="flex" ml={-1}>
+                  <Checkbox checked={values.policy} name="policy" onChange={handleChange}/>
+                  <Typography color="textSecondary" variant="body1">
+                    I have read the{' '}
+                    <Link color="primary" component={RouterLink} to="#" underline="always" variant="h6">
                       Terms and Conditions
                     </Link>
                   </Typography>
                 </Box>
+
                 {Boolean(touched.policy && errors.policy) && (
                   <FormHelperText error>
                     {errors.policy}
                   </FormHelperText>
                 )}
+
                 <Box my={2}>
                   <Button
                     color="primary"
@@ -180,17 +158,9 @@ const RegisterView = () => {
                     Sign up now
                   </Button>
                 </Box>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  Have an account?
-                  {' '}
-                  <Link
-                    component={RouterLink}
-                    to="/login"
-                    variant="h6"
-                  >
+                <Typography color="textSecondary" variant="body1">
+                  Have an account?{' '}
+                  <Link component={RouterLink} to="/login" variant="h6">
                     Sign in
                   </Link>
                 </Typography>

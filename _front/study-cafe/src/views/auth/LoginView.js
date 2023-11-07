@@ -15,7 +15,6 @@ import {
   CircularProgress
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import refreshToken from 'src/utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,26 +42,32 @@ const LoginView = () => {
     );
   }
 
-  const login = () => {
+  const loginValidation = Yup.object().shape({
+    email: Yup.string().max(255).required('Email is required'),
+    password: Yup.string().max(255).required('Password is required')
+  })
+
+  const login = (values) => {
     setLoading(true);
-    // navigate('/app/dashboard', { replace: true });
     try {
-      const data = { email: 'phm@naver.com' };
+      const data = {
+        username: values.email,
+        password: values.password
+      };
+
       axios.post('/api/authenticate', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/json',
         }
       })
         .then((res) => {
-          console.log('res.data.accessToken : ' + res.data);
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data;
-          setTimeout(() => {
-            refreshToken(null);
-          }, 60 * 1000);
-          navigate('/user/home', { replace: true });
+          console.log('res.data.accessToken : ' + res.data.token);
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token;
+          navigate('/', { replace: true });
         })
         .catch((ex) => {
           console.log('login requset fail : ' + ex);
+          setLoading(false)
         })
         .finally(() => { console.log('login request end'); });
     } catch (e) {
@@ -75,14 +80,8 @@ const LoginView = () => {
       <Box display="flex" flexDirection="column" height="100%" justifyContent="center">
         <Container maxWidth="sm">
           <Formik
-            initialValues={{
-              email: 'demo@devias.io',
-              password: 'Password123'
-            }}
-            validationSchema={Yup.object().shape({
-              email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-              password: Yup.string().max(255).required('Password is required')
-            })}
+            initialValues={{email: '', password: ''}}
+            validationSchema={loginValidation}
             onSubmit={login}
           >
             {({
@@ -115,7 +114,7 @@ const LoginView = () => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="email"
-                  value={values.email}
+                  value={values && values.email}
                   variant="outlined"
                 />
 
@@ -129,7 +128,7 @@ const LoginView = () => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                   type="password"
-                  value={values.password}
+                  value={values && values.password}
                   variant="outlined"
                 />
 
@@ -140,8 +139,7 @@ const LoginView = () => {
                 </Box>
 
                 <Typography color="textSecondary" variant="body1">
-                  Don&apos;t have an account?
-                  {' '}
+                  Don&apos;t have an account?{' '}
                   <Link component={RouterLink} to="/register" variant="h6">
                     Sign up
                   </Link>

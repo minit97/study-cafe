@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
-import refreshToken from 'src/utils';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
 
@@ -45,14 +44,14 @@ const DashboardLayout = () => {
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
   const silentLoginCallback = (login) => {
-    // if (!login) {
-    //   navigate('/auth/login', { replace: true });
-    // }
+    if (!login) {
+      navigate('/login', { replace: true });
+    }
     setLoading(false);
   };
 
   useEffect(() => {
-    refreshToken(silentLoginCallback);
+    silentLoginCallback(true);
   }, []);
 
   if (loading) {

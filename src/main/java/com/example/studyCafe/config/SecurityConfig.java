@@ -4,6 +4,7 @@ import com.example.studyCafe.config.jwt.JwtAccessDeniedHandler;
 import com.example.studyCafe.config.jwt.JwtAuthenticationEntryPoint;
 import com.example.studyCafe.config.jwt.JwtSecurityConfig;
 import com.example.studyCafe.config.jwt.TokenProvider;
+import com.example.studyCafe.config.security.LogoutSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
@@ -41,7 +41,10 @@ public class SecurityConfig {
         http
                 // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
                 .csrf(csrf -> csrf.disable())
-
+                .logout((logoutConfig) ->
+                        logoutConfig.logoutUrl("/api/logout1")
+                                .logoutSuccessHandler(new LogoutSuccessHandler())
+                )
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .accessDeniedHandler(jwtAccessDeniedHandler)
@@ -65,6 +68,7 @@ public class SecurityConfig {
                 )
 
                 .apply(new JwtSecurityConfig(tokenProvider));
+
         return http.build();
     }
 }
